@@ -1,5 +1,7 @@
 package pl.sda.javapol4.java_demo;
 
+import java.util.stream.Stream;
+
 class MyRunnable implements Runnable {
 
     public void run() {
@@ -16,12 +18,16 @@ abstract class MyClass {
 interface MyInterface {
     void justDoIt();
 }
+
 @FunctionalInterface
 interface StringToInt {
-   public abstract int nameLength(String name);
-   default int nameAndSurnameLength(String name, String surname){
-       return -1;
-   };
+    public abstract int nameLength(String name);
+
+    default int nameAndSurnameLength(String name, String surname) {
+        return -1;
+    }
+
+    ;
 }
 
 public class LambdaDemo {
@@ -42,32 +48,52 @@ public class LambdaDemo {
             @Override
             void m1() {
             }
+
             @Override
             void m2() {
-                 };
-    };
+            }
 
-    Runnable job2 = () -> {
-        System.out.println("hello from runnable lambda!!!");
-    };
+            ;
+        };
 
-    MyInterface nike = new MyInterface() {
-        @Override
-        public void justDoIt() {
+        Runnable job2 = () -> {
+            System.out.println("hello from runnable lambda!!!");
+        };
 
-        }
-    };
-    MyInterface nike2 = () -> {
-        System.out.println("hello from lambda!!!");
-    };
+        MyInterface nike = new MyInterface() {
+            @Override
+            public void justDoIt() {
 
-    StringToInt hack = (String s) -> 4;
-    StringToInt better = arg -> {
-        System.out.println("calculations....");
-        return arg.length();
-            };
-    StringToInt best = arg -> arg.length();
+            }
+        };
+        MyInterface nike2 = () -> {
+            System.out.println("hello from lambda!!!");
+        };
+
+        StringToInt hack = (String s) -> 4;
+        StringToInt better = arg -> {
+            System.out.println("calculations....");
+            return arg.length();
+        };
+        StringToInt best = arg -> arg.length();
         System.out.println("using best: " + best.nameLength("mariusz"));
         System.out.println("using best: " + best.nameAndSurnameLength("mariusz", "p."));
+
+        Stream<Object> objects = Stream.of("mariusz", "marek", "adrianna", "zenon", "rysiek", "halina", 1, 2);
+        Stream<String> names = Stream.of("mariusz", "marek", "adrianna", "zenon", "rysiek", "halina");
+
+//        names
+//        1. filter (names.len -> 6)
+//        2. sout - names lens
+
+        names.filter(string -> string.length() > 6)
+                .map(s -> s.length())
+                .forEach(integer -> System.out.println("from Stream<String> name len: " + integer));
+
+        objects.filter(o -> o instanceof String)
+                .map(o -> (String) o)
+                .map(s -> s.length())
+                .forEach(integer -> System.out.println("name len: " + integer));
     }
+
 }
