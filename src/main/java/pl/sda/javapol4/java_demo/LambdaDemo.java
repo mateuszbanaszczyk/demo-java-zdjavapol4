@@ -85,6 +85,7 @@ public class LambdaDemo {
 //        names
 //        1. filter (names.len -> 6)
 //        2. sout - names lens
+//3.
 
         names.filter(string -> string.length() > 6)
                 .map(s -> s.length())
